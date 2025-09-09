@@ -1,10 +1,12 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:glitch_app/data/model/movie_model.dart';
-import 'package:glitch_app/pages/home_page.dart';
-import 'package:glitch_app/pages/movie_page.dart';
-import 'package:glitch_app/theme/theme.dart';
+import 'package:glitch_app/features/auth/pages/signin_page.dart';
+import 'package:glitch_app/features/auth/pages/signup_page.dart';
+import 'package:glitch_app/features/auth/pages/welcome_page.dart';
+import 'package:glitch_app/features/glitch_app/pages/home_page.dart';
+import 'package:glitch_app/features/glitch_app/pages/movie_page.dart';
+import 'package:glitch_app/common/theme/theme.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -31,11 +33,22 @@ class MyApp extends StatelessWidget {
 
       //Declaring Routes
       onGenerateRoute: (settings) {
-        final args = settings.arguments;
         return switch (settings.name) {
+          SignInPage.route => MaterialPageRoute(
+            builder: (context) => SignInPage(),
+          ),
           HomePage.route => MaterialPageRoute(builder: (context) => HomePage()),
           MoviePage.route => MaterialPageRoute(
-            builder: (context) => MoviePage(movie: args as MovieModel),
+            builder: (context) {
+              final args = settings.arguments as MoviePageArguments;
+              return MoviePage(movie: args.movieModel);
+            },
+          ),
+          SignUpPage.route => MaterialPageRoute(
+            builder: (context) => SignUpPage(),
+          ),
+          SplashPage.route => MaterialPageRoute(
+            builder: (context) => SplashPage(),
           ),
           _ => null,
         };
