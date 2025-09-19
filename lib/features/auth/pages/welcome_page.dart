@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:glitch_app/features/auth/pages/signin_page.dart';
 import 'package:glitch_app/features/auth/pages/signup_page.dart';
-import 'package:glitch_app/features/auth/widgets/auth_button.dart';
 import 'package:glitch_app/features/auth/widgets/welcome_button.dart';
 
 class SplashPage extends StatefulWidget {

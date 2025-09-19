@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:glitch_app/features/auth/pages/signup_page.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class TopTile extends StatelessWidget {
@@ -25,9 +24,7 @@ class TopTile extends StatelessWidget {
                     borderRadius: BorderRadius.circular(10),
                   ),
                 ),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
+                onPressed: () {},
                 icon: Icon(Icons.close_rounded),
               ),
             ),
@@ -68,11 +65,7 @@ class TopTile extends StatelessWidget {
                               Theme.of(context).colorScheme.secondary,
                             ),
                           ),
-                          onPressed: () {
-                            Navigator.of(
-                              context,
-                            ).pushNamed(SignUpPage.route, arguments: null);
-                          },
+                          onPressed: () {},
                           child: Text(
                             'Get Premium',
                             style: TextStyle(

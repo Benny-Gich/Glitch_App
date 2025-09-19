@@ -19,6 +19,13 @@ class AuthField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      validator: (value) {
+        if (value!.isEmpty) {
+          return "$helptext is missing";
+        }
+        return null;
+      },
+      obscureText: isObscuretext,
       controller: controller,
       decoration: InputDecoration(
         suffixIcon: widget,

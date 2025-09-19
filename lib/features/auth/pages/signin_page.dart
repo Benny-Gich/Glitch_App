@@ -12,7 +12,19 @@ class SignInPage extends StatefulWidget {
 }
 
 class _SignInPageState extends State<SignInPage> {
-  //final TextEditingController textEditingController;
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+  final formKey = GlobalKey<FormState>();
+  bool? isSelected = false;
+
+  @override
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+    // Add code before the super
+    super.dispose();
+  }
+
   @override
   void initState() {
     // TODO: implement initState
@@ -60,117 +72,155 @@ class _SignInPageState extends State<SignInPage> {
                 ),
                 child: Padding(
                   padding: const EdgeInsets.all(20),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Center(
-                        child: Text(
-                          'Welcome Back!',
-                          style: Theme.of(context).textTheme.titleLarge,
+                  child: Form(
+                    key: formKey,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Center(
+                          child: Text(
+                            'Welcome Back!',
+                            style: Theme.of(context).textTheme.titleLarge,
+                          ),
                         ),
-                      ),
-                      SizedBox(height: 20),
-                      Text(
-                        'Email',
-                        textAlign: TextAlign.right,
-                        style: Theme.of(context).textTheme.bodyMedium,
-                      ),
-                      SizedBox(height: 10),
-                      AuthField(
-                        controller: TextEditingController(),
-                        helptext: 'John Doe',
-                        widget: IconButton(
-                          onPressed: () {},
-                          icon: Icon(Icons.visibility_off),
+                        SizedBox(height: 20),
+                        Text(
+                          'Email',
+                          textAlign: TextAlign.right,
+                          style: Theme.of(context).textTheme.bodyMedium,
                         ),
-                      ),
-                      SizedBox(height: 10),
-                      Text(
-                        'Password',
-                        textAlign: TextAlign.right,
-                        style: Theme.of(context).textTheme.bodyMedium,
-                      ),
-                      SizedBox(height: 10),
-                      AuthField(
-                        controller: TextEditingController(),
-                        helptext: 'Enter your password',
-                        isObscuretext: true,
-                      ),
-                      SizedBox(height: 10),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          Icon(Icons.check_box_outline_blank),
-                          Text('Remember Me'),
-                          Spacer(flex: 2),
-                          RichText(
-                            text: TextSpan(
-                              text: 'Forgot Password',
-                              style: TextStyle(
-                                color: Theme.of(
-                                  context,
-                                ).colorScheme.tertiaryContainer,
-                              ),
-                            ),
+                        SizedBox(height: 10),
+                        AuthField(
+                          controller: emailController,
+                          helptext: 'John Doe',
+                          widget: IconButton(
+                            onPressed: () {},
+                            icon: Icon(Icons.visibility_off),
                           ),
-                        ],
-                      ),
-                      SizedBox(height: 20),
-                      AuthButton(
-                        buttonText: 'Login',
-                        onPressed: () {
-                          Navigator.of(
-                            context,
-                          ).pushNamed(HomePage.route, arguments: null);
-                        },
-                      ),
-                      SizedBox(height: 30),
-                      Center(
-                        child: Text(
-                          'or Sign in with',
-                          style: TextStyle(color: Colors.grey, fontSize: 16),
                         ),
-                      ),
-                      SizedBox(height: 30),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          IconButton(
-                            onPressed: () {},
-                            icon: ClipRRect(
-                              borderRadius: BorderRadius.circular(16),
-                              child: Image.asset(
-                                height: 50,
-                                width: 50,
-                                'assets/facebook.png',
+                        SizedBox(height: 10),
+                        Text(
+                          'Password',
+                          textAlign: TextAlign.right,
+                          style: Theme.of(context).textTheme.bodyMedium,
+                        ),
+                        SizedBox(height: 10),
+                        AuthField(
+                          controller: passwordController,
+                          helptext: 'Enter your password',
+                          isObscuretext: true,
+                        ),
+                        SizedBox(height: 10),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: <Widget>[
+                            Checkbox(
+                              tristate: true,
+                              value: isSelected,
+                              onChanged: (newBool) {
+                                setState(() {
+                                  isSelected = newBool;
+                                });
+                              },
+                              activeColor: Theme.of(
+                                context,
+                              ).colorScheme.secondary,
+                              checkColor: Theme.of(context).colorScheme.primary,
+                            ),
+
+                            Text('Remember Me'),
+                            Spacer(flex: 2),
+                            RichText(
+                              text: TextSpan(
+                                text: 'Forgot Password',
+                                style: TextStyle(
+                                  color: Theme.of(
+                                    context,
+                                  ).colorScheme.tertiaryContainer,
+                                ),
                               ),
                             ),
-                          ),
-                          IconButton(
-                            onPressed: () {},
-                            icon: ClipRRect(
-                              borderRadius: BorderRadius.circular(16),
-                              child: Image.asset(
-                                height: 50,
-                                width: 50,
-                                'assets/google.png',
+                          ],
+                        ),
+                        SizedBox(height: 20),
+                        AuthButton(
+                          buttonText: 'Login',
+                          onPressed: () {
+                            Navigator.of(
+                              context,
+                            ).pushNamed(HomePage.route, arguments: null);
+                          },
+                        ),
+                        SizedBox(height: 30),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: Divider(
+                                thickness: 0.7,
+                                color: Theme.of(context).colorScheme.secondary,
                               ),
                             ),
-                          ),
-                          IconButton(
-                            onPressed: () {},
-                            icon: ClipRRect(
-                              borderRadius: BorderRadius.circular(16),
-                              child: Image.asset(
-                                height: 50,
-                                width: 50,
-                                'assets/apple.png',
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 10,
+                              ),
+                              child: Text(
+                                'or Sign in with',
+                                style: TextStyle(
+                                  color: Colors.grey,
+                                  fontSize: 16,
+                                ),
                               ),
                             ),
-                          ),
-                        ],
-                      ),
-                    ],
+                            Expanded(
+                              child: Divider(
+                                thickness: 0.7,
+                                color: Theme.of(context).colorScheme.secondary,
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 30),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            IconButton(
+                              onPressed: () {},
+                              icon: ClipRRect(
+                                borderRadius: BorderRadius.circular(16),
+                                child: Image.asset(
+                                  height: 50,
+                                  width: 50,
+                                  'assets/facebook.png',
+                                ),
+                              ),
+                            ),
+                            IconButton(
+                              onPressed: () {},
+                              icon: ClipRRect(
+                                borderRadius: BorderRadius.circular(16),
+                                child: Image.asset(
+                                  height: 50,
+                                  width: 50,
+                                  'assets/google.png',
+                                ),
+                              ),
+                            ),
+                            IconButton(
+                              onPressed: () {},
+                              icon: ClipRRect(
+                                borderRadius: BorderRadius.circular(16),
+                                child: Image.asset(
+                                  height: 50,
+                                  width: 50,
+                                  'assets/apple.png',
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),

@@ -11,6 +11,11 @@ class MovieGrid extends StatefulWidget {
 }
 
 class _MovieGridState extends State<MovieGrid> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
   final List<MovieModel> newMovie = [
     MovieModel(
       title: '97 Minutes',
